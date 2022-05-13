@@ -4,6 +4,13 @@ const PasswordPrompt = require("inquirer/lib/prompts/password");
 console.log("Welcome!");
 
 const questions = [
+
+    {
+        type: 'list',
+        name: 'enviroment',
+        message: "Which enviroment would you like to use?",
+        choices: ['Production', 'earlydev', 'dev']
+    },
     {
     type: 'rawlist',
     name: 'command',
@@ -29,7 +36,11 @@ const questions = [
         },
     
     },
-    {
+    
+     {
+         when: answer => {
+              return answer.command == "Update Password"
+            },
         type: 'input',
         name:'password',
         message:'Enter new password', 
@@ -53,6 +64,9 @@ const questions = [
         },
     },
     {
+        when: answer => {
+            return answer.command == "Extend Expiration"
+        },
         type: 'list',
         name: 'extend',
         message: 'How many months would you like to extend?',
@@ -64,7 +78,7 @@ const questions = [
     ]
 
     inquirer.prompt(questions).then((answers) => {
-        console.log('\nOrder receipt:');
+      
         console.log(JSON.stringify(answers, null, '  '));
       });
 
